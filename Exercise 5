@@ -1,0 +1,89 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 50
+
+struct Student {
+    int roll;
+    char name[50];
+    int marks;
+};
+
+void display(struct Student s[], int n, char *title);
+void sortByRoll(struct Student s[], int n);
+void sortByName(struct Student s[], int n);
+void sortByMarks(struct Student s[], int n);
+
+int main() {
+    struct Student s[MAX], temp[MAX];
+    int n, i;
+
+    printf("Enter number of students: ");
+    scanf("%d", &n);
+
+    for(i = 0; i < n; i++) {
+        printf("\nEnter details for student %d:\n", i + 1);
+        printf("Roll No: ");
+        scanf("%d", &s[i].roll);
+        printf("Name: ");
+        scanf(" %[^\n]s", s[i].name);
+        printf("Marks: ");
+        scanf("%d", &s[i].marks);
+    }
+    
+    memcpy(temp, s, sizeof(s));
+    sortByName(temp, n);
+    display(temp, n, "ALPHABETICAL LIST");
+
+    memcpy(temp, s, sizeof(s));
+    sortByRoll(temp, n);
+    display(temp, n, "SORTED BY ROLL NUMBER");
+
+    memcpy(temp, s, sizeof(s));
+    sortByMarks(temp, n);
+    display(temp, n, "RANK-WISE LIST (HIGHEST MARKS FIRST)");
+
+    return 0;
+}
+
+void display(struct Student s[], int n, char *title) {
+    printf("\n--- %s ---\n", title);
+    printf("%-10s %-20s %s\n", "Roll No", "Name", "Marks");
+    for(int i = 0; i < n; i++) {
+        printf("%-10d %-20s %d\n", s[i].roll, s[i].name, s[i].marks);
+    }
+}
+
+void sortByName(struct Student s[], int n) {
+    struct Student temp;
+    for(int i = 0; i < n-1; i++) {
+        for(int j = i+1; j < n; j++) {
+            if(strcmp(s[i].name, s[j].name) > 0) {
+                temp = s[i]; s[i] = s[j]; s[j] = temp;
+            }
+        }
+    }
+}
+
+void sortByRoll(struct Student s[], int n) {
+    struct Student temp;
+    for(int i = 0; i < n-1; i++) {
+        for(int j = i+1; j < n; j++) {
+            if(s[i].roll > s[j].roll) {
+                temp = s[i]; s[i] = s[j]; s[j] = temp;
+            }
+        }
+    }
+}
+
+void sortByMarks(struct Student s[], int n) {
+    struct Student temp;
+    for(int i = 0; i < n-1; i++) {
+        for(int j = i+1; j < n; j++) {
+            if(s[i].marks < s[j].marks) { 
+                temp = s[i]; s[i] = s[j]; s[j] = temp;
+            }
+        }
+    }
+}
+

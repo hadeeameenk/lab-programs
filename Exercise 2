@@ -1,0 +1,49 @@
+#include <stdio.h>
+
+int findLargest(int a, int b, int c);
+int findSmallest(int a, int b, int c);
+void calculateAverage(int a, int b, int c);
+
+int main() {
+    int m1, m2, m3;
+
+    printf("Enter marks for three subjects (0-100): ");
+    scanf("%d %d %d", &m1, &m2, &m3);
+
+    printf("\nLargest Mark: %d", findLargest(m1, m2, m3));
+
+    printf("\nSmallest Mark: %d", findSmallest(m1, m2, m3));
+
+    calculateAverage(m1, m2, m3);
+
+    return 0;
+}
+
+int findLargest(int a, int b, int c) {
+    if (a >= b) {
+        if (a >= c) return a;
+        else return c;
+    } else {
+        if (b >= c) return b;
+        else return c;
+    }
+}
+
+int findSmallest(int a, int b, int c) {
+    if (a <= b && a <= c) {
+        return a;
+    } else if (b <= a && b <= c) {
+        return b;
+    } else {
+        return c;
+    }
+}
+void calculateAverage(int a, int b, int c) {
+    float average = (a + b + c) / 3.0;
+    
+    int V = (average >= 50) ? 1 : 0;
+
+    printf("\nAverage: %.2f", average);
+    printf("\nValue of V: %d\n", V);
+}
+

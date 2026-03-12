@@ -1,0 +1,64 @@
+#include<stdio.h>
+
+int main()
+{
+    int a[100][100], r, c;
+    int i, j, k;
+    int min, col, sad = 0;
+    int big, sec;
+
+    printf("Enter rows and columns: ");
+    scanf("%d%d", &r, &c);
+
+    printf("Enter matrix:\n");
+    for(i=0; i<r; i++)
+        for(j=0; j<c; j++)
+            scanf("%d", &a[i][j]);
+
+    // Saddle point check
+    for(i=0; i<r; i++)
+    {
+        min = a[i][0];
+        col = 0;
+        
+        // Min in row
+        for(j=1; j<c; j++)
+            if(a[i][j] < min)
+            {
+                min = a[i][j];
+                col = j;
+            }
+        
+        // Max in col?
+        for(k=0; k<r; k++)
+            if(a[k][col] > min)
+                break;
+        
+        if(k == r)
+        {
+            printf("\nSaddle: %d at (%d,%d)", min, i+1, col+1);
+            sad = 1;
+        }
+    }
+    
+    if(sad == 0)
+        printf("\nNo saddle point");
+
+    // Second largest
+    big = sec = a[0][0];
+    for(i=0; i<r; i++)
+        for(j=0; j<c; j++)
+        {
+            if(a[i][j] > big)
+            {
+                sec = big;
+                big = a[i][j];
+            }
+            else if(a[i][j] > sec && a[i][j] != big)
+                sec = a[i][j];
+        }
+    
+    printf("\nSecond largest: %d", sec);
+    
+    return 0;
+}

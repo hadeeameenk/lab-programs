@@ -1,0 +1,56 @@
+#include <stdio.h>
+#include <math.h>
+
+double solveSin(double x);
+double solveCos(double x);
+double solveSumSeries();
+
+int main() {
+    double x, x_deg;
+
+    printf("--- 6.14 Series Evaluator ---\n");
+    printf("Enter value of x in degrees for sin/cos: ");
+    scanf("%lf", &x_deg);
+
+    x = x_deg * (M_PI / 180.0);
+
+    printf("\n(a) sin(%.2f) = %.6f", x_deg, solveSin(x));
+    printf("\n(b) cos(%.2f) = %.6f", x_deg, solveCos(x));
+    printf("\n(c) Sum Series   = %.6f\n", solveSumSeries());
+
+    return 0;
+}
+
+double solveSin(double x) {
+    double sum = x, term = x;
+    int n = 1;
+    while (fabs(term) > 0.000001) {
+        term = -term * x * x / ((2 * n) * (2 * n + 1));
+        sum += term;
+        n++;
+    }
+    return sum;
+}
+
+double solveCos(double x) {
+    double sum = 1.0, term = 1.0;
+    int n = 1;
+    while (fabs(term) > 0.000001) {
+        term = -term * x * x / ((2 * n - 1) * (2 * n));
+        sum += term;
+        n++;
+    }
+    return sum;
+}
+
+double solveSumSeries() {
+    double sum = 0.0, term;
+    int n = 1;
+    do {
+        term = pow((1.0 / n), n);
+        sum += term;
+        n++;
+    } while (term > 0.000001);
+    return sum;
+}
+

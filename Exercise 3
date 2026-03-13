@@ -8,7 +8,6 @@ double solveSumSeries();
 int main() {
     double x, x_deg;
 
-    printf("--- 6.14 Series Evaluator ---\n");
     printf("Enter value of x in degrees for sin/cos: ");
     scanf("%lf", &x_deg);
 
